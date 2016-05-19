@@ -1,25 +1,28 @@
+require_relative './concerns/findable'
+require_relative './concerns/common'
 class Genre
-	attr_accessor :name
-	@@all = []
+  include Concerns::Common
+  extend Concerns::Findable
+	attr_accessor :name, :songs
+	
 	def initialize(name)
 		@name = name
+		@songs = []
 	end
 
-	def Genre.create(name)
-		genre = Genre.new(name)
-		genre.save
-		return genre
+	def add_song(song)
+		unless @songs.include?(song)
+		  @songs << song
+			song.genre = self
+		end
 	end
-
-	def save
-		@@all << self
-	end
-
-	def Genre.all
-		@@all
-	end
-
-	def Genre.destroy_all
-		@@all = []
-	end
+  
+  def artists
+    artists = []
+    @songs.each do |song|
+      artists << song.artist unless artists.include?(song.artist)
+    end
+    artists
+  end
 end
+
