@@ -24,17 +24,13 @@ class Artist
   end
 
   def add_song(song)
-    unless @songs.include?(song)
+    if !@songs.include?(song)
       @songs << song
       song.artist = self
     end
   end
 
   def genres
-    genres = []
-    @songs.each do |song|
-      genres << song.genre unless genres.include?(song.genre)
-    end
-    genres
+    @songs.uniq(&:genre).map(&:genre)
   end
 end

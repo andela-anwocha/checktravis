@@ -43,7 +43,7 @@ class MusicLibraryController
 
   def err_message
     "
-    Invalid Input Entered, Please Try Again
+      Invalid Input Entered, Please Try Again
     ".colorize(:red)
   end
 
