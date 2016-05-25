@@ -3,20 +3,32 @@ require_relative './concerns/common'
 class Genre
   include Concerns::Common
   extend Concerns::Findable
-	attr_accessor :name, :songs
-	
-	def initialize(name)
-		@name = name
-		@songs = []
-	end
+  attr_accessor :name, :songs
+  @@all = []
+  def initialize(name)
+    @name = name
+    @songs = []
+  end
 
-	def add_song(song)
-		unless @songs.include?(song)
-		  @songs << song
-			song.genre = self
-		end
-	end
-  
+  def all
+    @@all
+  end
+
+  def self.all
+    @@all
+  end
+
+  def self.all=(value)
+    @@all = value
+  end
+
+  def add_song(song)
+    unless @songs.include?(song)
+      @songs << song
+      song.genre = self
+    end
+  end
+
   def artists
     artists = []
     @songs.each do |song|
@@ -25,4 +37,3 @@ class Genre
     artists
   end
 end
-

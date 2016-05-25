@@ -5,21 +5,29 @@ class Artist
   extend Concerns::Findable
 
   attr_accessor :name, :songs
-
+  @@all = []
   def initialize(name)
-  	@name = name
-  	@songs = []	
+    @name = name
+    @songs = []
+  end
+
+  def all
+    @@all
+  end
+
+  def self.all
+    @@all
+  end
+
+  def self.all=(value)
+    @@all = value
   end
 
   def add_song(song)
-  	unless @songs.include?(song)
-  		@songs << song
-  		song.artist = self
-  	end
-  end
-
-  def add_genre(genre)
-  	@@genres << genre unless @@genres.include?(genre)
+    unless @songs.include?(song)
+      @songs << song
+      song.artist = self
+    end
   end
 
   def genres

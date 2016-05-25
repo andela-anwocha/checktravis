@@ -1,50 +1,60 @@
 require_relative './concerns/common'
 require_relative './concerns/findable'
+
 class Song
   include Concerns::Common
   extend Concerns::Findable
 
   attr_accessor :name, :artist, :genre
-  def initialize(name, artist=nil, genre=nil)
+  @@all = []
+  def initialize(name, artist = nil, genre = nil)
     @name = name
-    if artist
-        self.artist = artist
-    end
-    if genre
-        self.genre = genre
-    end
+    self.artist = artist if artist
+    self.genre = genre if genre
+  end
+
+  def all
+    @@all
+  end
+
+  def self.all
+    @@all
+  end
+
+  def self.all=(value)
+    @@all = value
   end
 
   def self.new_from_filename(file_name)
-    model_names = file_name.gsub(".mp3", "").split(" - ")
+    model_names = file_name.gsub('.mp3', '').split(' - ')
     Song.new(model_names[1], Artist.find_or_create_by_name(model_names[0]), Genre.find_or_create_by_name(model_names[2]))
   end
 
   def self.create_from_filename(file_name)
-    song = self.new_from_filename(file_name)
+    song = new_from_filename(file_name)
     song.save
-    return song
+    song
   end
 
   def artist=(artist)
-    unless artist.songs.include?(self)
-        @artist = artist
-        artist.add_song(self)
+    if artist.songs.include?(self)
+      @artist = artist
     else
-        @artist = artist
+      @artist = artist
+      artist.add_song(self)
     end
   end
 
   def genre=(genre)
-    unless genre.songs.include?(self)
-        @genre = genre
-        genre.add_song(self)
+    if genre.songs.include?(self)
+      @genre = genre
     else
-        @genre = genre
+      @genre = genre
+      genre.add_song(self)
     end
   end
+
+  def to_s
+    "#{artist.name} - #{name} - #{genre.name}"
+  end
 end
-
-
-
-
