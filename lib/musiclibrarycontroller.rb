@@ -1,33 +1,17 @@
-require_relative './musicimporter'
 require 'colorize'
-
 class MusicLibraryController
   def initialize(path = './db/mp3s')
     MusicImporter.new(path).import
   end
 
   def call
-    puts prompt_message.colorize(:cyan)
+    puts Message.welcome_message.colorize(:cyan)
     user_input = ''
     until user_input.eql?('exit')
-      puts command_help
+      puts Message.command_help
       user_input = gets.chomp
-      if user_input.eql?('exit')
-        break
-      elsif user_options.include?(user_input)
-        send user_options[user_input]
-      else
-        puts err_message
-      end
+      validate_user_input(user_input)
     end
-  end
-
-  def prompt_message
-    "
-
-                              Ruby MusicLibrary
-      =============================================================
-    "
   end
 
   def user_options
@@ -41,31 +25,9 @@ class MusicLibraryController
     }
   end
 
-  def err_message
-    "
-      Invalid Input Entered, Please Try Again
-    ".colorize(:red)
-  end
-
-  def command_help
-    "
-      =============================================================
-                          List of Possible Commands
-      =============================================================
-      list songs - Displays Detailed Information on Imported Songs
-      list artists - Displays All Artists From Imported Songs
-      list genres - Displays all Genres from Imported Songs
-      play song - Play A Specific Song With Song Number
-      list artist - Displays Songs with Artist name
-      list genre - Displays Songs with Genre name
-    ".colorize(:green) + "
-      Please Enter Command Input....
-    ".colorize(:cyan)
-  end
-
   def list_songs
-    Song.all.each_with_index do |song, indx|
-      puts "#{indx + 1}. #{song}".colorize(:yellow)
+    Song.all.each.with_index(1) do |song, index|
+      puts "#{index}. #{song}".colorize(:yellow)
     end
   end
 
@@ -94,14 +56,14 @@ class MusicLibraryController
 
   def list_artist
     puts 'Please Enter Artist Name'.colorize(:cyan)
-    user_input = gets.chomp.to_s
+    user_input = gets.chomp
     artist = Artist.find_by_name(user_input)
     display_songs(artist)
   end
 
   def list_genre
     puts 'Please Enter Genre Name'.colorize(:cyan)
-    user_input = gets.chomp.to_s
+    user_input = gets.chomp
     genre = Genre.find_by_name(user_input)
     display_songs(genre)
   end
@@ -115,4 +77,16 @@ class MusicLibraryController
       puts 'Name not Available'.colorize(:red)
     end
   end
+
+  def validate_user_input(user_input)
+      if user_input.eql?('exit')
+        puts "Exiting...".colorize(:yellow)
+      elsif user_options.include?(user_input)
+        send user_options[user_input]
+      else
+        puts Message.err_message
+      end
+  end
 end
+
+

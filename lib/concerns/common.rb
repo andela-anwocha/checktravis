@@ -5,7 +5,7 @@ module Concerns
     end
 
     def save
-      all << self
+      self.class.all << self
     end
 
     module ClassMethods
@@ -15,8 +15,12 @@ module Concerns
         obj
       end
 
+      def all
+        class_variable_get(:@@all)
+      end
+
       def destroy_all
-        self.all = []
+        class_variable_get(:@@all).clear
       end
     end
   end

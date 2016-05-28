@@ -1,6 +1,3 @@
-require_relative './concerns/common'
-require_relative './concerns/findable'
-
 class Song
   include Concerns::Common
   extend Concerns::Findable
@@ -17,21 +14,11 @@ class Song
     end
   end
 
-  def all
-    @@all
-  end
-
-  def self.all
-    @@all
-  end
-
-  def self.all=(value)
-    @@all = value
-  end
-
   def self.new_from_filename(file_name)
     model_names = file_name.gsub('.mp3', '').split(' - ')
-    Song.new(model_names[1], Artist.find_or_create_by_name(model_names[0]), Genre.find_or_create_by_name(model_names[2]))
+    artist = Artist.find_or_create_by_name(model_names[0])
+    genre = Genre.find_or_create_by_name(model_names[2])
+    Song.new(model_names[1], artist, genre)
   end
 
   def self.create_from_filename(file_name)
@@ -41,18 +28,16 @@ class Song
   end
 
   def artist=(artist)
-    if artist.songs.include?(self)
-      @artist = artist
-    else
+    @artist = artist
+    unless artist.songs.include?(self)
       @artist = artist
       artist.add_song(self)
     end
   end
 
   def genre=(genre)
-    if genre.songs.include?(self)
-      @genre = genre
-    else
+    @genre = genre
+    unless genre.songs.include?(self)
       @genre = genre
       genre.add_song(self)
     end
