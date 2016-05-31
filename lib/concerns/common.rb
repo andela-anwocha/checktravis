@@ -1,11 +1,19 @@
 module Concerns
   module Common
     def self.included(base)
-      base.extend ClassMethods
+      base.extend(ClassMethods)
     end
 
     def save
       self.class.all << self
+    end
+
+
+    def add_song(song)
+      unless @songs.include?(song)
+        @songs << song
+        song.send(self.class.name.downcase+"=", self)
+      end
     end
 
     module ClassMethods

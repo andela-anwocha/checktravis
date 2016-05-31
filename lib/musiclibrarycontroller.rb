@@ -5,9 +5,9 @@ class MusicLibraryController
   end
 
   def call
-    puts Message.welcome_message.colorize(:cyan)
+    puts Message.welcome_message
     user_input = ''
-    until user_input.eql?('exit')
+    until user_input.eql?('exit') do
       puts Message.command_help
       user_input = gets.chomp
       validate_user_input(user_input)
@@ -79,13 +79,13 @@ class MusicLibraryController
   end
 
   def validate_user_input(user_input)
-      if user_input.eql?('exit')
-        puts "Exiting...".colorize(:yellow)
-      elsif user_options.include?(user_input)
-        send user_options[user_input]
-      else
-        puts Message.err_message
-      end
+    if user_input.eql?('exit')
+      puts "Exiting...".colorize(:yellow)
+    elsif user_options.include?(user_input)
+      send user_options[user_input]
+    else
+      puts Message.err_message
+    end
   end
 end
 

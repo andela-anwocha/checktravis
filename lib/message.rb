@@ -4,7 +4,7 @@ class Message
 
                               Ruby MusicLibrary
       =============================================================
-    "
+    ".colorize(:cyan)
   end
 
   def self.command_help
