@@ -12,6 +12,7 @@ It then gives the user the ability to list the various songs, artists or genres,
 ```sh
 $ git clone https://github.com/andela-anwocha/checkpoint-one-music-lib.git
 ```
+
 2. Navigate into the cloned repository folder:
 
 ```sh
