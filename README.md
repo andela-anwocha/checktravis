@@ -8,7 +8,7 @@ A simple cli-based music library implemented with ruby. The application uses a s
 It then gives the user the ability to list the various songs, artists or genres, play a specific song or search via song, artist or genre
 
 ### Getting Started
-1.Clone this repositoy:
+1. Clone this repositoy:
 ```sh
 $ git clone https://github.com/andela-anwocha/checkpoint-one-music-lib.git
 ```
