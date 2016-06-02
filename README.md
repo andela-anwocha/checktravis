@@ -32,7 +32,9 @@ Still in the checkpoint-one-music-lib folder, enter:
     ```
 
 #### List of commands
+
 Available commands in Cli:
+
     ```sh
     list songs - Displays All Imported Songs
     list genres - Displays All Genres from Imported Songs
