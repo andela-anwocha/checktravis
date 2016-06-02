@@ -32,18 +32,12 @@ Still in the checkpoint-one-music-lib folder, enter:
     ```
 
 #### List of commands
-
-    > list songs - Displays All Imported Songs  
-        
-    > list genres - Displays All Genres from Imported Songs  
-    
-    > list artists - Displays All Artists from Imported songs  
-    
-    > play song - Play a particular Song with Song number  
-    
-    > list artist - Displays Songs with artist name  
-    
-    > list genre - Displays Songs with specified genre name  
+*  list songs - Displays All Imported Songs  
+*  list genres - Displays All Genres from Imported Songs  
+*  list artists - Displays All Artists from Imported songs  
+*  play song - Play a particular Song with Song number  
+*  list artist - Displays Songs with artist name  
+*  list genre - Displays Songs with specified genre name  
     
 ### Dependecies
 Refer to Gemfile for dependencies
